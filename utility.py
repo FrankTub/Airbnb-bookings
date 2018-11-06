@@ -18,16 +18,17 @@ def scatter_plot(df, kpi, column):
     plt.ylabel(kpi)
     return plt
 
-def clean_data(data):
+def clean_data(df):
     '''
     INPUT
-    data - pandas dataframe containing info from the license.csv file
+    df - pandas dataframe containing info from the license.csv file
     
     OUTPUT
-    data - cleaned dataframe, removed unnecassary columns
+    df - cleaned dataframe, removed unnecassary columns
     '''
+    data = df.copy()
     # Drop columns which have no added value.
-    data.drop(['square_feet', 'host_total_listings_count'], axis=1, inplace=True) 
+    data.drop(['square_feet', 'host_total_listings_count', 'id', 'scrape_id', 'host_id', 'latitude', 'longitude', 'license'], axis=1, inplace=True) 
     # Get overview of how many unique values a column has.
     s = data.nunique()
     unique_data = pd.DataFrame({'column':s.index, 'unique_values':s.values})
