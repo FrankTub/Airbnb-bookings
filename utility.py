@@ -3,12 +3,13 @@ import numpy as np
 import pandas as pd
 
 # Create a scatter plot function
-def scatter_plot(df, kpi, column):
+def scatter_plot(df, kpi, column, plt):
     '''
     INPUT
     df     - pandas dataframe 
     kpi    - the variable you're interested in as a string
     column - interval variable as a string
+    plt    - subplot 
     
     OUTPUT
     X      - A scatter plot, with on the  x-axis the column and on the y-axis the kpi.
@@ -69,4 +70,4 @@ def aggr(df, kpi, column):
     OUTPUT
     data   - A dataframe with aggregrated mean
     '''
-    return data.groupby([column]).mean()[[kpi]].reset_index()
+    return df.groupby([column]).mean()[[kpi]].reset_index()
