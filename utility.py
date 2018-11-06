@@ -59,3 +59,14 @@ def clean_data(df):
     
     return data
     
+def aggr(df, kpi, column):
+    '''
+    INPUT
+    df     - pandas dataframe 
+    kpi    - the variable you're interested in as a string
+    column - interval variable as a string
+    
+    OUTPUT
+    data   - A dataframe with aggregrated mean
+    '''
+    return data.groupby([column]).mean()[[kpi]].reset_index()
