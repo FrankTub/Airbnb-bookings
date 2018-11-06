@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 # Create a scatter plot function
 def scatter_plot(df, kpi, column) :
     '''
