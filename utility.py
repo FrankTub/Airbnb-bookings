@@ -68,7 +68,7 @@ def clean_calendar_data(df):
     OUTPUT
     df - aggregrated dataframe containing occupancy rate per day
     '''
-    data_calendar = df.copy()
+    df_calendar = df.copy()
     # Make sure we only take the rows where the appartment was booked, then group by on date and count how many houses where booked
     data_calendar = df_calendar[df_calendar['available'] == 'f'].groupby('date').count()['listing_id'].reset_index()
     # Then divide that number by the total number of houses in the dataset
