@@ -119,3 +119,21 @@ def format_string(str):
     str     - Formatted string, first letter is capatilized and "_" are replaced with " "
     '''
     return str.replace("_", " ").capitalize()
+
+def box_plot(df, kpi, column, plt):
+    '''
+    INPUT
+    df     - pandas dataframe
+    kpi    - the variable you're interested in as a string
+    column - interval variable as a string
+    plt    - subplot
+
+    OUTPUT
+    X      - A box plot, with on the  x-axis the column and on the y-axis the kpi.
+    '''
+    df.boxplot(column=kpi, by=column);
+    plt.suptitle('');
+    plt.xlabel(format_string(column));
+    plt.ylabel(format_string(kpi));
+    return plt
+    
