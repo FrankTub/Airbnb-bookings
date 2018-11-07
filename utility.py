@@ -15,8 +15,8 @@ def scatter_plot(df, kpi, column, plt):
     X      - A scatter plot, with on the  x-axis the column and on the y-axis the kpi.
     '''
     plt.scatter(x=df[column], y=df[kpi])
-    plt.xlabel(column)
-    plt.ylabel(kpi)
+    plt.xlabel(format_string(column))
+    plt.ylabel(format_string(kpi))
     return plt
 
 def clean_data(df):
@@ -69,7 +69,7 @@ def clean_calendar_data(df):
     df - aggregrated dataframe containing occupancy rate per day
     '''
     df_calendar = df.copy()
-    # Make sure we only take the rows where the appartment was booked, then group by on date and count how many houses where booked
+    # Make sure we only take the rows where the appartment was booked, then group by on date and count how many houses were booked
     data_calendar = df_calendar[df_calendar['available'] == 'f'].groupby('date').count()['listing_id'].reset_index()
     # Then divide that number by the total number of houses in the dataset
     data_calendar['listing_id'] = data_calendar['listing_id'] / df_calendar.listing_id.nunique()
@@ -79,6 +79,24 @@ def clean_calendar_data(df):
     data_calendar['date'] = pd.to_datetime(data_calendar['date'])
 
     return data_calendar
+    
+def clean_review_data(df):
+    '''
+    INPUT
+    df - pandas dataframe containing info from the review.csv file
+
+    OUTPUT
+    df - aggregrated dataframe containing occupancy rate per day
+    '''
+    df_reviews = df.copy()
+    # Group by on date and count how many reviews were made on that day
+    data_reviews = df_reviews.groupby('date').count()['id'].reset_index()
+    # Reset the column names
+    data_reviews.columns = ['date', 'num_reviews']
+    # Cast the datatype of the date column so that we can use plot_date.
+    data_reviews['date'] = pd.to_datetime(data_reviews['date'])
+
+    return data_reviews
 
 def aggr(df, kpi, column):
     '''
@@ -91,3 +109,13 @@ def aggr(df, kpi, column):
     data   - A dataframe with aggregrated mean
     '''
     return df.groupby([column]).mean()[[kpi]].reset_index()
+
+def format_string(str):
+    '''
+    INPUT
+    str     - column name containing "_" charachters
+
+    OUTPUT
+    str     - Formatted string, first letter is capatilized and "_" are replaced with " "
+    '''
+    return str.replace("_", " ").capitalize()
