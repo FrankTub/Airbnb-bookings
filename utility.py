@@ -136,4 +136,19 @@ def box_plot(df, kpi, column, plt):
     plt.xlabel(format_string(column));
     plt.ylabel(format_string(kpi));
     return plt
+
+def date_plot(df, column, plt):
+    '''
+    INPUT
+    df     - pandas dataframe
+    column - interval variable as a string
+    plt    - subplot
+
+    OUTPUT
+    X      - A fsyr plot, with on the  x-axis the yimeframe and on the y-axis the column.
+    '''
+    plt.plot_date(df['date'], df[column], linestyle='solid', marker='None');
+    plt.ylabel(format_string(column));
+
+    return plt
     
