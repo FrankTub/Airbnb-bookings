@@ -15,8 +15,7 @@
 In order to be able to execute your own python statements it should be noted that scripts are only tested on **anaconda distribution 4.5.11** in combination with **python 3.6.6**. The scripts don't require additional python libraries.
 
 Two quick start options are available:
-
-- [Download the latest release.](https://github.com/FrankTub/AirBNB/archive/v1.0.0.zip)
+- [Download the latest release.](https://github.com/FrankTub/AirBNB/zipball/master/)
 - Clone the repo: `git clone https://github.com/FrankTub/AirBNB.git`
 
 ## Project motivation
@@ -24,7 +23,7 @@ For the second term of the nanodegree [become a data scientist](https://eu.udaci
 
 ## File descriptions
 
-Within the download you'll find the following directories and files. 
+Within the download you'll find the following directories and files.
 
 ```text
 AirBNB/
