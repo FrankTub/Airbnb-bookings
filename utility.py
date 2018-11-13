@@ -148,7 +148,9 @@ def date_plot(df, column, plt):
     X      - A fsyr plot, with on the  x-axis the yimeframe and on the y-axis the column.
     '''
     plt.plot_date(df['date'], df[column], linestyle='solid', marker='None');
-    plt.ylabel(format_string(column));
+    metric = format_string(column);
+    plt.ylabel(metric);
+    plt.title(metric + ' over time.')
 
     return plt
     
