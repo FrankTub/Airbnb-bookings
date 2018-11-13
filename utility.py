@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import os
+
+# Variable to make sure that we don't store the images for the post in the git repository.
+filedir=r'C:\Users\frank_tubbing\Dropbox\Data Science\Term 2\Breaking into the field'
 
 # Create a scatter plot function
 def scatter_plot(df, kpi, column, plt, title=None):
@@ -24,6 +28,9 @@ def scatter_plot(df, kpi, column, plt, title=None):
     plt.xlabel(x)
     plt.ylabel(y)
     plt.title(title)
+    
+    filepath = os.path.join(filedir, title)
+    plt.savefig(filepath, bbox_inches='tight')
     return plt
 
 def clean_data(df):
@@ -148,6 +155,10 @@ def box_plot(df, kpi, column, plt, title=None):
     plt.title(title);
     plt.xlabel(x);
     plt.ylabel(y);
+    
+    filepath = os.path.join(filedir, title)
+    plt.savefig(filepath, bbox_inches='tight')
+    
     return plt
 
 def date_plot(df, column, plt, title=None):
@@ -166,6 +177,9 @@ def date_plot(df, column, plt, title=None):
     if title is None:
         title = metric + ' over time'
     plt.title(title)
+    
+    filepath = os.path.join(filedir, title)
+    plt.savefig(filepath, bbox_inches='tight')
 
     return plt
     
