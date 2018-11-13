@@ -33,7 +33,7 @@ def scatter_plot(df, kpi, column, plt, title=None):
     plt.savefig(filepath, bbox_inches='tight')
     return plt
 
-def clean_data(df):
+def clean_data(df, df2):
     '''
     INPUT
     df - pandas dataframe containing info from the license.csv file
@@ -41,7 +41,27 @@ def clean_data(df):
     OUTPUT
     df - cleaned dataframe, removed unnecassary columns
     '''
-    data = df.copy()
+    dat = df.copy()
+    df_calendar = df2.copy()
+    
+    # First do some group by and pivotting to get the information we need.
+    df_occupied = pd.DataFrame(pd.pivot_table(df_calendar.groupby(['listing_id', 'available']).count()['date'].reset_index(),index=["listing_id"], columns='available', values='date').reset_index(), columns=['listing_id', 'f', 't']).fillna(0)
+    # Then rename our columns, available(f) means that the house was occupied, available(t) means that the house was available
+    df_occupied.columns = ['listing_id', 'occupied', 'available']
+
+    # Create a column that shows how often an appartment is occupied. This will be our main value that we want to demistify
+    df_occupied['occupancy_rate'] = df_occupied['occupied'] / (df_occupied['available'] + df_occupied['occupied'])
+
+    # First I made sure that all apartments contained 365 rows in the calendar.csv and then concluded that we don't need the available and occupied column.
+    # So we can remove the other unnecessary columns
+    df_occupied.drop(['available', 'occupied'], axis=1, inplace=True)
+    
+    # Join two dataframes on listing_id
+    data = dat.merge(df_occupied, left_on='id', right_on='listing_id', how='inner')
+    
+    # Remove the added listing_id column and availability 365, I found it easier to interpret occupancy rate!
+    data.drop(['listing_id', 'availability_365'], axis=1, inplace=True)
+    
     # Drop columns which have no added value.
     data.drop(['square_feet', 'host_total_listings_count', 'id', 'scrape_id', 'host_id', 'latitude', 'longitude', 'license'], axis=1, inplace=True)
     # Get overview of how many unique values a column has.
