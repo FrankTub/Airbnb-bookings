@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Create a scatter plot function
-def scatter_plot(df, kpi, column, plt):
+def scatter_plot(df, kpi, column, plt, title=None):
     '''
     INPUT
     df     - pandas dataframe
@@ -15,8 +15,14 @@ def scatter_plot(df, kpi, column, plt):
     X      - A scatter plot, with on the  x-axis the column and on the y-axis the kpi.
     '''
     plt.scatter(x=df[column], y=df[kpi])
-    plt.xlabel(format_string(column))
-    plt.ylabel(format_string(kpi))
+    x = format_string(column)
+    y = format_string(kpi)
+    
+    if title is None:
+        title = x + ' vs ' + y
+    plt.xlabel(x)
+    plt.ylabel(y)
+    plt.title(title)
     return plt
 
 def clean_data(df):
