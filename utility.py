@@ -10,6 +10,7 @@ def scatter_plot(df, kpi, column, plt, title=None):
     kpi    - the variable you're interested in as a string
     column - interval variable as a string
     plt    - subplot
+    title  - Title of the figure
 
     OUTPUT
     X      - A scatter plot, with on the  x-axis the column and on the y-axis the kpi.
@@ -126,24 +127,30 @@ def format_string(str):
     '''
     return str.replace("_", " ").capitalize()
 
-def box_plot(df, kpi, column, plt):
+def box_plot(df, kpi, column, plt, title=None):
     '''
     INPUT
     df     - pandas dataframe
     kpi    - the variable you're interested in as a string
     column - interval variable as a string
     plt    - subplot
+    title  - Title of the figure
 
     OUTPUT
     X      - A box plot, with on the  x-axis the column and on the y-axis the kpi.
     '''
     df.boxplot(column=kpi, by=column);
     plt.suptitle('');
-    plt.xlabel(format_string(column));
-    plt.ylabel(format_string(kpi));
+    x = format_string(column)
+    y = format_string(kpi)
+    if title is None:
+        title = y + ' per ' + x
+    plt.title(title);
+    plt.xlabel(x);
+    plt.ylabel(y);
     return plt
 
-def date_plot(df, column, plt):
+def date_plot(df, column, plt, title=None):
     '''
     INPUT
     df     - pandas dataframe
@@ -151,12 +158,14 @@ def date_plot(df, column, plt):
     plt    - subplot
 
     OUTPUT
-    X      - A fsyr plot, with on the  x-axis the yimeframe and on the y-axis the column.
+    X      - A date plot, with on the  x-axis the timeframe and on the y-axis the column.
     '''
     plt.plot_date(df['date'], df[column], linestyle='solid', marker='None');
     metric = format_string(column);
     plt.ylabel(metric);
-    plt.title(metric + ' over time.')
+    if title is None:
+        title = metric + ' over time'
+    plt.title(title)
 
     return plt
     
